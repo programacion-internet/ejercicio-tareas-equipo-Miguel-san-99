@@ -13,7 +13,7 @@ class TareaController extends Controller
      */
     public function index()
     {
-        //
+        return view('tareas.index-tareas');
     }
 
     /**

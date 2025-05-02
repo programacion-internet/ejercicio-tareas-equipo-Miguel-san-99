@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,10 @@ class TareaFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'nombre' => fake()->name(),
+            'descripcion' => fake()->paragraph(),
+            'fecha_limite' => $this->faker->date('Y-m-d', '+1 year'),
         ];
     }
 }
