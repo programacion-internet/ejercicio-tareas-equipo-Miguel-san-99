@@ -2,28 +2,34 @@
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
 
-            <div class="alert alert-primary" role="alert">
+            {{-- <div class="alert alert-primary" role="alert">
                 A simple primary alert—check it out!
-              </div>
+            </div> --}}
 
             <table border="1">
                 <tr>
+                    <th>Id</th>
                     <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>Secciones</th>
+                    <th>Descripcion</th>
+                    <th>Fecha limite</th>
+                    <th>Propietario</th>
+                    <th>Participantes</th>
                 </tr>
 
-                {{-- @foreach ($alumnos as $alumno)
+                @foreach ($tareas as $tarea)
                     <tr>
-                        <td><a href="{{ route('alumno.show', $alumno) }}">{{ $alumno->nombre }}</a></td>
-                        <td>{{ $alumno->correo }}</td>
+                        <td><a href="{{ route('tarea.show', $tarea) }}">{{ $tarea->id }}</a></td>
+                        <td>{{ $tarea->nombre }}</td>
+                        <td>{{ $tarea->descripcion }}</td>
+                        <td>{{ $tarea->fecha_limite }}</td>
+                        <td>{{ $tarea->owner->name }}</td>
                         <td>
-                            @foreach ($alumno->secciones as $seccion)
-                                {{ $seccion->nombre }} - {{ $seccion->seccion }}<br>
+                            @foreach ($tarea->users as $user)
+                                {{ $user->name }} <br>
                             @endforeach
                         </td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </table>
 
         </div>
