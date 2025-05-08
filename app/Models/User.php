@@ -77,4 +77,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Tarea::class);
     }
+    public function archivos()
+    {
+        return $this->hasMany(Archivo::class);
+    }
 }

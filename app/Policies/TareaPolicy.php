@@ -21,7 +21,12 @@ class TareaPolicy
      */
     public function view(User $user, Tarea $tarea): bool
     {
-        return false;
+        return $user->id === $tarea->user_id || $tarea->users->contains($user->id);
+    }
+
+    public function viewOwner(User $user, Tarea $tarea): bool
+    {
+        return $user->id === $tarea->user_id;
     }
 
     /**
