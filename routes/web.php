@@ -5,6 +5,7 @@ use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TareaController;
+use App\Mail\notificacionMailable;
 use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\AuthController;
 
@@ -52,3 +53,8 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('show.login');
 Route::post('/registrar', [AuthController::class, 'registrar'])->name('registrar');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/notificacion', function (){
+    Mail::to('mike.one10@hotmail.com')->send(new notificacionMailable);
+    return "Correo enviado";
+})->name('notificacion');

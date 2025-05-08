@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreTareaRequest;
 use App\Http\Requests\UpdateTareaRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotificacionMailable;
 
 class TareaController extends Controller
 {
@@ -47,7 +50,7 @@ class TareaController extends Controller
         $tarea->nombre = $request->nombre;
         $tarea->descripcion = $request->descripcion;
         $tarea->fecha_limite = $request->fecha_limite;
-        $tarea->user_id = auth();
+        $tarea->user_id = auth()->id();
         $tarea->save();
         return redirect()->route('tarea.index');
     }
@@ -57,6 +60,7 @@ class TareaController extends Controller
      */
     public function show(Tarea $tarea)
     {
+        Gate::authorize('view', $tarea);
         $users = User::all();
         $user = auth()->user();
         $archivos = $tarea->archivos;
@@ -84,11 +88,18 @@ class TareaController extends Controller
      */
     public function destroy(Tarea $tarea)
     {
-        //
+        $tarea->delete();
+        return redirect()->route('tarea.index');
     }
     public function actualizarTareaUsuarios(Request $request, Tarea $tarea)
     {
         $tarea->users()->sync($request->user_id);
+        $usuariosAsignados = $tarea->users;
+
+        // Envía notificación por correo a cada uno
+        foreach ($usuariosAsignados as $user) {
+            Mail::to($user->email)->send(new notificacionMailable($user, $tarea));
+        }
         return redirect()->route('tarea.show', $tarea);
     }
 }

@@ -1,8 +1,14 @@
 <x-mi-layout titulo="Detalle tarea">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
+            <div class="text-end">
+                <form class="" action="{{ route('tarea.destroy', $tarea) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger">Eliminar tarea</button>
+                </form>
+            </div>
             <h1>{{ $tarea->nombre }}</h1>
-
             <ul>
                 <li>Descripcion: {{ $tarea->descripcion }}</li>
                 <li>Fecha limite: {{ $tarea->fecha_limite }}</li>
