@@ -6,30 +6,30 @@
                 A simple primary alert—check it out!
             </div> --}}
 
-            <table border="1">
+            <table class="table table-striped">
                 <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Fecha limite</th>
-                    <th>Propietario</th>
-                    <th>Participantes</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Fecha limite</th>
+                    <th scope="col">Propietario</th>
                 </tr>
 
-                @foreach ($tareas as $tarea)
+                @forelse ($tareas as $tarea)
                     <tr>
-                        <td><a href="{{ route('tarea.show', $tarea) }}">{{ $tarea->id }}</a></td>
-                        <td>{{ $tarea->nombre }}</td>
-                        <td>{{ $tarea->descripcion }}</td>
-                        <td>{{ $tarea->fecha_limite }}</td>
-                        <td>{{ $tarea->owner->name }}</td>
-                        <td>
-                            @foreach ($tarea->users as $user)
-                                {{ $user->name }} <br>
-                            @endforeach
-                        </td>
+                        @can('view', $tarea)
+                            <td><a href="{{ route('tarea.show', $tarea) }}">{{ $tarea->id }}</a></td>
+                            <td>{{ $tarea->nombre }}</td>
+                            <td>{{ $tarea->descripcion }}</td>
+                            <td>{{ $tarea->fecha_limite }}</td>
+                            <td>{{ $tarea->owner->name }}</td>
+                        @endcan
                     </tr>
-                @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4">No hay tareas disponibles.</td>
+                        </tr>
+                @endforelse
             </table>
 
         </div>
