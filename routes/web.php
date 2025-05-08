@@ -10,7 +10,7 @@ use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
-    return view('inicio');
+    return view('/');
 })->name('home');
 
 Route::view('dashboard', 'dashboard')
